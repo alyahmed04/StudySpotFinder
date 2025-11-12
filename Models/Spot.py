@@ -1,12 +1,9 @@
 from dataclasses import dataclass
-import User
+import uuid
 
 @dataclass
 class Spot:
 
-    name: str
+    spotID: uuid
+    spotName: str
     location: float
-    noiseLevel: int
-    content: str
-    crowdedness: int
-    user: User
