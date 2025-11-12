@@ -1,5 +1,5 @@
 import mysql.connector
-from Models.Review import Review
+from Models.Spot import Spot
 
 config = {
   'user': 'placeholder',
@@ -19,28 +19,21 @@ db = mysql.connector.connect(**config)
 #                "(first_name, last_name, hire_date, gender, birth_date) "
 #                "VALUES (%s, %s, %s, %s, %s)")
 
-class ReviewDB:
+class SpotDB:
 
-    def create_review(review: Review):
+    def create_spot(spot: Spot):
        
         print("hello")
         #ccreate
         
 
-    def edit_post_rating(review: Review):
+    def edit_spot_location(spot: Spot):
 
         print("hello")
         #sometjhng 
 
 
-
-    def edit_post_content(review: Review):
-
-        print("hello")
-        #sometjhng 
-
-
-    def delete_review(review: Review):
+    def delete_spot(spot: Spot):
         print("hello")
         print("hello")
         #sometjhng
