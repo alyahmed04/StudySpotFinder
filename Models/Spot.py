@@ -1,14 +1,12 @@
 from dataclasses import dataclass
 import User
-import Spot
 
 @dataclass
-class Review:
+class Spot:
 
-    rating: float
+    name: str
+    location: float
     noiseLevel: int
     content: str
     crowdedness: int
     user: User
-    spot: Spot
-    

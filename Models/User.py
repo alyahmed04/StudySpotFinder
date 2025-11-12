@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import Spot
 
 @dataclass
 class User:
@@ -8,6 +9,7 @@ class User:
     password: str
     favoriteStudySpot: str
     kudos: int
+    spot: Spot
 
     
 
