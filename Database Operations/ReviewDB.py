@@ -1,14 +1,18 @@
-import mysql.connector
 from Models.Review import Review
 from Models.User import User
 from Models.Spot import Spot
 from ExecuteDB import execute_DBOperation
 
+
+#Learned from the following sources
+#https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-transaction.html
+#https://www.w3schools.com/python/python_mysql_update.asp
+#https://www.red-gate.com/simple-talk/databases/mysql/modifying-mysql-data-from-within-python/
+
 create_review = ("INSERT INTO spot_reviews "
                 "(spotID, userID, noiseLevel, crowdedness, starRating, reviewText) "
                 "VALUES (%s, %s, %s, %s, %s, %s)")
 
-#
 edit_review_rating = "UPDATE spot_reviews SET starRating = %s WHERE reviewID = %s"
 edit_review_text = "UPDATE spot_reviews SET reviewText = %s WHERE reviewID = %s"
 edit_review_noiseLevel = "UPDATE spot_reviews SET noiseLevel = %s WHERE reviewID = %s"
@@ -19,7 +23,6 @@ delete_review = "DELETE from spot_reviews WHERE reviewID = %s"
 
 class ReviewDB:
         
-
     def create_review(starRating: float, noiseLevel: int, content: str, crowdedness: int, user: User, spot: Spot):
         value = (spot.spotID, user.userID, noiseLevel, crowdedness, starRating, content)
         execute_DBOperation(create_review, value)

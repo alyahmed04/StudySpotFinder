@@ -1,28 +1,19 @@
-import mysql.connector
 from Models.Spot import Spot
 from ExecuteDB import execute_DBOperation
-import uuid
 
-config = {
-  'user': 'placeholder',
-  'password': 'password',
-  'host': '127.0.0.1',
-  'database': 'studyspot',
-  'raise_on_warnings': True
-}
 
-db = mysql.connector.connect(**config)
+#Learned from the following sources
+#https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-transaction.html
+#https://www.w3schools.com/python/python_mysql_update.asp
+#https://www.red-gate.com/simple-talk/databases/mysql/modifying-mysql-data-from-within-python/
+
 
 create_spot = ("INSERT INTO study_spots "
                 "(spotName, location) "
                 "VALUES (%s, %s)")
-
-#
 edit_spot_name = "UPDATE study_spots SET spotName = %s WHERE spotID = %s"
 edit_spot_location = "UPDATE study_spots SET location = %s WHERE spotID = %s"
 delete_spot = "DELETE from study_spots WHERE spotID = %s"
-
-cursor = db.cursor()
 
 class SpotDB:
 
@@ -45,5 +36,3 @@ class SpotDB:
         value = (spot.spotID,)
         execute_DBOperation(delete_spot, value)
 
-db.commit()
-db.close()

@@ -1,13 +1,17 @@
-import mysql.connector
 from Models.User import User
 from ExecuteDB import execute_DBOperation
 from Models.Spot import Spot
+
+#Learned from the following sources
+#https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-transaction.html
+#https://www.w3schools.com/python/python_mysql_update.asp
+#https://www.red-gate.com/simple-talk/databases/mysql/modifying-mysql-data-from-within-python/
 
 create_user = ("INSERT INTO users "
                 "(username, email, hashedPassword, favoriteStudySpot, kudos) "
                 "VALUES (%s, %s, %s, %s, %s)")
 
-#
+
 edit_username = "UPDATE users SET username = %s WHERE userID = %s"
 edit_favoriteStudySpot = "UPDATE users SET favoriteStudySpot = %s WHERE userID = %s"
 delete_user = "DELETE from users WHERE userID = %s"
