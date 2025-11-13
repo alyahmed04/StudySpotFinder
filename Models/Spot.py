@@ -5,4 +5,4 @@ class Spot:
 
     spotID: int
     spotName: str
-    location: float
+    location: str

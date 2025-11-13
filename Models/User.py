@@ -8,7 +8,7 @@ class User:
     username: str
     email: str
     password: str
-    favoriteStudySpot: str
+    favoriteStudySpot: int
     kudos: int
     spot: Spot
 

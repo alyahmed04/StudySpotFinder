@@ -6,7 +6,7 @@ import Spot
 class Review:
 
     reviewID: int
-    rating: float
+    rating: int
     noiseLevel: int
     content: str
     crowdedness: int

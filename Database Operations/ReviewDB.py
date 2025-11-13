@@ -4,17 +4,17 @@ from Models.User import User
 from Models.Spot import Spot
 from ExecuteDB import execute_DBOperation
 
-create_review = ("INSERT INTO spotReviews "
-                "(spotID, userID, noiseLevel, crowdedness, content) "
-                "VALUES (%s, %s, %s, %s, %s)")
+create_review = ("INSERT INTO spot_reviews "
+                "(spotID, userID, noiseLevel, crowdedness, starRating, reviewText) "
+                "VALUES (%s, %s, %s, %s, %s, %s)")
 
 #
-edit_review_rating = "UPDATE spotReviews SET rating = %s WHERE reviewID = %s"
-edit_review_content = "UPDATE spotReviews SET content = %s WHERE reviewID = %s"
-edit_review_noiseLevel = "UPDATE spotReviews SET noiseLevel = %s WHERE reviewID = %s"
-edit_review_crowdedness = "UPDATE spotReviews SET crowdedness = %s WHERE reviewID = %s"
+edit_review_rating = "UPDATE spot_reviews SET starRating = %s WHERE reviewID = %s"
+edit_review_text = "UPDATE spot_reviews SET reviewText = %s WHERE reviewID = %s"
+edit_review_noiseLevel = "UPDATE spot_reviews SET noiseLevel = %s WHERE reviewID = %s"
+edit_review_crowdedness = "UPDATE spot_reviews SET crowdedness = %s WHERE reviewID = %s"
 
-delete_spot = "DELETE from spotReviews WHERE reviewID = %s"
+delete_spot = "DELETE from spot_reviews WHERE reviewID = %s"
 
 
 class ReviewDB:
@@ -30,9 +30,9 @@ class ReviewDB:
         execute_DBOperation(edit_review_rating, value)
 
 
-    def edit_review_content(review: Review, content: str):
+    def edit_review_text(review: Review, content: str):
         value = (f"{content}", f"{review.reviewID}")
-        execute_DBOperation(edit_review_content, value)
+        execute_DBOperation(edit_review_text, value)
 
 
     def edit_review_noiseLevel(review: Review, noiseLevel: int):

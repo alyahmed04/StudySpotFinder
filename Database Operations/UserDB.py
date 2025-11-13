@@ -5,7 +5,7 @@ from Models.Spot import Spot
 
 create_user = ("INSERT INTO users "
                 "(username, email, hashedPassword, favoriteStudySpot, kudos) "
-                "VALUES (%s, %s, %s, %s)")
+                "VALUES (%s, %s, %s, %s, %s)")
 
 #
 edit_username = "UPDATE users SET username = %s WHERE userID = %s"
