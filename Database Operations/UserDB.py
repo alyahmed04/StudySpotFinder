@@ -14,7 +14,7 @@ create_user = ("INSERT INTO users "
 
 edit_username = "UPDATE users SET username = %s WHERE userID = %s"
 edit_favoriteStudySpot = "UPDATE users SET favoriteStudySpot = %s WHERE userID = %s"
-delete_user = "DELETE from users WHERE userID = %s"
+delete_user = "DELETE FROM users WHERE userID = %s"
 
 class UserDB:
 

@@ -18,7 +18,7 @@ edit_review_text = "UPDATE spot_reviews SET reviewText = %s WHERE reviewID = %s"
 edit_review_noiseLevel = "UPDATE spot_reviews SET noiseLevel = %s WHERE reviewID = %s"
 edit_review_crowdedness = "UPDATE spot_reviews SET crowdedness = %s WHERE reviewID = %s"
 
-delete_review = "DELETE from spot_reviews WHERE reviewID = %s"
+delete_review = "DELETE FROM spot_reviews WHERE reviewID = %s"
 
 
 class ReviewDB:

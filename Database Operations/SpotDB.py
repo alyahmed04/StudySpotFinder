@@ -13,7 +13,7 @@ create_spot = ("INSERT INTO study_spots "
                 "VALUES (%s, %s)")
 edit_spot_name = "UPDATE study_spots SET spotName = %s WHERE spotID = %s"
 edit_spot_location = "UPDATE study_spots SET location = %s WHERE spotID = %s"
-delete_spot = "DELETE from study_spots WHERE spotID = %s"
+delete_spot = "DELETE FROM study_spots WHERE spotID = %s"
 
 class SpotDB:
 
