@@ -1,5 +1,5 @@
 from Models.Spot import Spot
-from ExecuteDB import execute_DBOperation
+from Database_Operations.ExecuteDB import execute_DBOperation
 
 
 #Learned from the following sources about sql and mysqlconnector

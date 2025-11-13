@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-import Spot
+from Models import Spot
 
 
 #Learned dataclass from 

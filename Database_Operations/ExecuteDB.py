@@ -6,9 +6,9 @@ import mysql.connector
 #https://www.red-gate.com/simple-talk/databases/mysql/modifying-mysql-data-from-within-python/
 
 config = {
-  'user': 'placeholder',
-  'password': 'password',
-  'host': '127.0.0.1',
+  'user': 'root',
+  'password': '',
+  'host': 'localhost',
   'database': 'studyspot',
   'raise_on_warnings': True
 }

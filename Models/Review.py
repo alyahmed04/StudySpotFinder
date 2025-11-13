@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-import User
-import Spot
+from Models import User
+from Models import Spot
 
 
 #Learned dataclass from 
