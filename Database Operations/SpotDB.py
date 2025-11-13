@@ -17,8 +17,8 @@ create_spot = ("INSERT INTO studySpots "
                 "VALUES (%s, %s)")
 
 #
-edit_spot_name = "UPDATE spot SET spotName = %s WHERE spotID = %s"
-edit_spot_location = "UPDATE spot SET location = %s WHERE spotID = %s"
+edit_spot_name = "UPDATE studySpots SET spotName = %s WHERE spotID = %s"
+edit_spot_location = "UPDATE studySpots SET location = %s WHERE spotID = %s"
 delete_spot = "DELETE from studySpots WHERE spotID = %s"
 
 cursor = db.cursor()

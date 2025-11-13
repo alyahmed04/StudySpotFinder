@@ -5,6 +5,7 @@ import Spot
 @dataclass
 class Review:
 
+    reviewID: int
     rating: float
     noiseLevel: int
     content: str

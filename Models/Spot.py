@@ -1,9 +1,8 @@
 from dataclasses import dataclass
-import uuid
 
 @dataclass
 class Spot:
 
-    spotID: uuid
+    spotID: int
     spotName: str
     location: float
