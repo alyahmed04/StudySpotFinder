@@ -14,37 +14,37 @@ edit_review_text = "UPDATE spot_reviews SET reviewText = %s WHERE reviewID = %s"
 edit_review_noiseLevel = "UPDATE spot_reviews SET noiseLevel = %s WHERE reviewID = %s"
 edit_review_crowdedness = "UPDATE spot_reviews SET crowdedness = %s WHERE reviewID = %s"
 
-delete_spot = "DELETE from spot_reviews WHERE reviewID = %s"
+delete_review = "DELETE from spot_reviews WHERE reviewID = %s"
 
 
 class ReviewDB:
         
 
-    def create_review(rating: float, noiseLevel: int, content: str, crowdedness: int, user: User, spot: Spot):
-        value = (f"{spot.spotID}", f"{user.userID}", f"{noiseLevel}", f"{crowdedness}", f"{content}")
+    def create_review(starRating: float, noiseLevel: int, content: str, crowdedness: int, user: User, spot: Spot):
+        value = (spot.spotID, user.userID, noiseLevel, crowdedness, starRating, content)
         execute_DBOperation(create_review, value)
         
 
-    def edit_review_rating(review: Review, rating: float):
-        value = (f"{rating}", f"{review.reviewID}")
+    def edit_review_rating(review: Review, starRating: float):
+        value = (starRating, review.reviewID)
         execute_DBOperation(edit_review_rating, value)
 
 
     def edit_review_text(review: Review, content: str):
-        value = (f"{content}", f"{review.reviewID}")
+        value = (content, review.reviewID)
         execute_DBOperation(edit_review_text, value)
 
 
     def edit_review_noiseLevel(review: Review, noiseLevel: int):
-        value = (f"{noiseLevel}", f"{review.reviewID}")
+        value = (noiseLevel, review.reviewID)
         execute_DBOperation(edit_review_noiseLevel, value)
 
     
     def edit_review_crowdedness(review: Review, crowdedness: int):
-        value = (f"{crowdedness}", f"{review.reviewID}")
+        value = (crowdedness, review.reviewID)
         execute_DBOperation(edit_review_crowdedness, value)
 
     def delete_review(review: Review):
-        value = (f"{review.reviewID}")
-        execute_DBOperation(delete_spot, value)
+        value = (review.reviewID)
+        execute_DBOperation(delete_review, value)
     

@@ -16,9 +16,9 @@ class UserDB:
 
     def create_user(username: str, email: str, password: str, favoriteStudySpot: str, kudos: int = 0, spot: Spot = None):
         if spot is None:
-            value = (f"{username}", f"{email}", f"{password}", f"{spot}", f"{kudos}")
+            value = (username, email, password, spot, kudos)
         else:
-            value = (f"{username}", f"{email}", f"{password}", f"{spot.spotID}", f"{kudos}")
+            value = (username, email, password, spot.spotID, kudos)
         execute_DBOperation(create_user, value)
 
     # def compare_user_creditentials(user: User):
@@ -29,14 +29,14 @@ class UserDB:
     #     db.close()
 
     def edit_username(user: User, username: str):
-        value = (f"{username}", f"{user.userID}")
+        value = (username, user.userID)
         execute_DBOperation(edit_username, value)
 
 
     def edit_favorite_study_spot(user: User, spot: Spot):
-        value = (f"{spot.spotID}", f"{user.userID}")
+        value = (spot.spotID, user.userID)
         execute_DBOperation(edit_favoriteStudySpot, value)
 
     def delete_user(user: User):
-        value = (f"{user.userID}")
-        execute_DBOperation(edit_favoriteStudySpot, value)
+        value = (user.userID,)
+        execute_DBOperation(delete_user, value)

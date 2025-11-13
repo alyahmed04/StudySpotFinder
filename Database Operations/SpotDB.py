@@ -1,5 +1,6 @@
 import mysql.connector
 from Models.Spot import Spot
+from ExecuteDB import execute_DBOperation
 import uuid
 
 config = {
@@ -26,23 +27,23 @@ cursor = db.cursor()
 class SpotDB:
 
     def create_spot(spotName: str, location: str):
-        value = (f"{spotName}", f"{location}")
-        cursor.execute(create_spot, value)
+        value = (spotName, location)
+        execute_DBOperation(create_spot, value)
         
     def edit_spot_name(spot: Spot, spotName: str):
         spot.spotName = spotName
-        value = (f"{spotName}", f"{spot.spotID}")
-        cursor.execute(edit_spot_name, value)
+        value = (spotName, spot.spotID)
+        execute_DBOperation(edit_spot_name, value)
 
     def edit_spot_location(spot: Spot, location: str):
 
         spot.location = location
-        value = (f"{location}", f"{spot.spotID}")
-        cursor.execute(edit_spot_location, value)
+        value = (location, spot.spotID)
+        execute_DBOperation(edit_spot_location, value)
 
     def delete_spot(spot: Spot):
-        value = f"{spot.spotID}"
-        cursor.execute(delete_spot, value)
+        value = (spot.spotID,)
+        execute_DBOperation(delete_spot, value)
 
 db.commit()
 db.close()
