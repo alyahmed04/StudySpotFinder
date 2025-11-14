@@ -25,6 +25,12 @@ def test_create_user():
 def test_create_review():
     print("3. Creating a review")
     # Not implemented yet
+
+def test_edit_spot_name():
+
+    # Edit the name of a study spot
+    print("4. Editing a spot's name")
+    SpotDB.edit_spot_name("Newman", "Newman Library")
     
 if __name__ == "__main__":
     try:
@@ -36,5 +42,11 @@ if __name__ == "__main__":
     try:
         test_create_user()
         print("\nUser successfully created")
+    except Exception as e:
+        print(f"\nError occurred: {e}")
+
+    try:
+        test_edit_spot_name()
+        print("\nSpot name successfully edited")
     except Exception as e:
         print(f"\nError occurred: {e}")
