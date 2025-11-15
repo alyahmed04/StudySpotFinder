@@ -34,5 +34,5 @@ class UserDB:
         execute_DBOperation(edit_favoriteStudySpot, value)
 
     def delete_user(user: User):
-        value = (user.userID)
+        value = (user.userID,)
         execute_DBOperation(delete_user, value)

@@ -33,6 +33,6 @@ class SpotDB:
         execute_DBOperation(edit_spot_location, value)
 
     def delete_spot(spot: Spot):
-        value = (spot.spotID)
+        value = (spot.spotID,)
         execute_DBOperation(delete_spot, value)
 
