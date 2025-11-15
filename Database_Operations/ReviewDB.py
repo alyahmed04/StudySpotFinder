@@ -23,7 +23,7 @@ delete_review = "DELETE FROM spot_reviews WHERE reviewID = %s"
 
 class ReviewDB:
         
-    def create_review(starRating: float, noiseLevel: int, content: str, crowdedness: int, user: User, spot: Spot):
+    def create_review(starRating: int, noiseLevel: int, content: str, crowdedness: int, user: User, spot: Spot):
         value = (spot.spotID, user.userID, noiseLevel, crowdedness, starRating, content)
         execute_DBOperation(create_review, value)
         

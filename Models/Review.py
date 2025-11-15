@@ -9,10 +9,10 @@ from Models import Spot
 class Review:
 
     reviewID: int
-    rating: int
+    starRating: int
     noiseLevel: int
-    content: str
     crowdedness: int
+    content: str
     user: User
     spot: Spot
     
