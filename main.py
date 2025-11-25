@@ -88,12 +88,29 @@ class test_SQL_commands(unittest.TestCase):
         db = mysql.connector.connect(**config)
         cursor = db.cursor()
         print("4. Editing a spot's name")
-        SpotDB.create_spot("Newman Library", "560 Drillfield Dr, Blacksburg, VA")
         SpotDB.edit_spot_name("Newman", "Newman Library")
 
         cursor.execute("SELECT * FROM study_spots;")
         result = cursor.fetchall()
         expected = [(1, "Newman", "560 Drillfield Dr, Blacksburg, VA")]
+        self.assertEqual(result, expected)
+
+
+        cursor.close()
+        db.close()
+
+    def test_edit_spot_location(self):
+
+        # Edit the name of a study spot
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+        print("4. Editing a spot's name")
+
+        SpotDB.edit_spot_location("570 Drillfield Dr, Blacksburg, VA", "560 Drillfield Dr, Blacksburg, VA")
+
+        cursor.execute("SELECT * FROM study_spots;")
+        result = cursor.fetchall()
+        expected = [(1, "Newman", "570 Drillfield Dr, Blacksburg, VA")]
         self.assertEqual(result, expected)
 
 
