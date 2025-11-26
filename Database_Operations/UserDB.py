@@ -18,11 +18,11 @@ delete_user = "DELETE FROM users WHERE userID = %s"
 
 class UserDB:
 
-    def create_user(username: str, email: str, password: str, favoriteStudySpot: str, kudos: int = 0, spot: Spot = None):
-        if spot is None:
-            value = (username, email, password, spot, kudos)
+    def create_user(username: str, email: str, password: str, favoriteStudySpot: Spot = None, kudos: int = 0):
+        if favoriteStudySpot is None:
+            value = (username, email, password, favoriteStudySpot, kudos)
         else:
-            value = (username, email, password, spot.spotID, kudos)
+            value = (username, email, password, favoriteStudySpot.spotID, kudos)
         execute_DBOperation(create_user, value)
 
     def edit_username(user: User, username: str):
