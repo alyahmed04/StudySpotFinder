@@ -22,9 +22,11 @@ config = {
 #learned about unit test order from 
 #https://stackoverflow.com/questions/4095319/unittest-tests-order
 
-#SQL commands learned from under various pages
+#SQL commands and sql connector learned from under various pages
 #https://www.w3schools.com/python/python_mysql_where.asp
 #https://dev.mysql.com/doc/connector-python/en/connector-python-api-mysqlcursor-fetchone.html
+#https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-transaction.html
+
 
 class test_SQL_commands(unittest.TestCase):        
 
