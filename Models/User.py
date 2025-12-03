@@ -13,7 +13,6 @@ class User:
     password: str
     favoriteStudySpot: int
     kudos: int
-    spot: Spot
 
     
 

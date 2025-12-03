@@ -47,6 +47,7 @@ class ReviewDB:
         value = (crowdedness, review.reviewID)
         execute_DBOperation(edit_review_crowdedness, value)
 
+
     def delete_review(review: Review):
         value = (review.reviewID)
         execute_DBOperation(delete_review, value)

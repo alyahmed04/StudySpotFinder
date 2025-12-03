@@ -7,6 +7,7 @@ from Models.Spot import Spot
 #https://www.w3schools.com/python/python_mysql_update.asp
 #https://www.red-gate.com/simple-talk/databases/mysql/modifying-mysql-data-from-within-python/
 
+
 create_user = ("INSERT INTO users "
                 "(username, email, hashedPassword, favoriteStudySpot, kudos) "
                 "VALUES (%s, %s, %s, %s, %s)")
@@ -18,11 +19,11 @@ delete_user = "DELETE FROM users WHERE userID = %s"
 
 class UserDB:
 
-    def create_user(username: str, email: str, password: str, favoriteStudySpot: str, kudos: int = 0, spot: Spot = None):
-        if spot is None:
-            value = (username, email, password, spot, kudos)
+    def create_user(username: str, email: str, password: str, favoriteStudySpot: Spot = None, kudos: int = 0):
+        if favoriteStudySpot is None:
+            value = (username, email, password, favoriteStudySpot, kudos)
         else:
-            value = (username, email, password, spot.spotID, kudos)
+            value = (username, email, password, favoriteStudySpot.spotID, kudos)
         execute_DBOperation(create_user, value)
 
     def edit_username(user: User, username: str):
@@ -34,5 +35,8 @@ class UserDB:
         execute_DBOperation(edit_favoriteStudySpot, value)
 
     def delete_user(user: User):
-        value = (user.userID,)
+        #learned from:
+        #https://stackoverflow.com/questions/61831138/creating-python-tuple-with-one-int-item
+        value = tuple([user.userID,])
+        
         execute_DBOperation(delete_user, value)
