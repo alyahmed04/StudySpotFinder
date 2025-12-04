@@ -485,6 +485,25 @@ class test_SQL_commands(unittest.TestCase):
 
         cursor.close()
         db.close()
+    def test_invalid_cases(self):
+        print("9: Testing invalid inputs and cases")
+        # Attempt to create a study spot with invalid name
+        with self.assertRaises(Exception):
+            #attempt to create spot with empty name (not NULL empty string)
+            SpotDB.create_spot("", "24060 Kent St, Blacksburg, VA")
+        with self.assertRaises(Exception):
+            #attempt to create spot with NULL name
+            SpotDB.create_spot(None, "24060 Kent St, Blacksburg, VA")
+        # Attempt to create a spot with an invalid location
+        with self.assertRaises(Exception):
+            #attempt to create spot with empty location (not NULL empty string)
+            SpotDB.create_spot("Test Spot", "")
+        with self.assertRaises(Exception):
+            #attempt to create spot with NULL location
+            SpotDB.create_spot("Test Spot", None)
+
+
+
 
 
 

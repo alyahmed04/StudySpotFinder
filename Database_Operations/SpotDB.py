@@ -18,6 +18,11 @@ delete_spot = "DELETE FROM study_spots WHERE spotID = %s"
 class SpotDB:
 
     def create_spot(spotName: str, location: str):
+        
+        #Ensuring that spotName and location are not empty or NULL
+        if not spotName or not location:
+            raise ValueError("Spot name and location cannot be empty or NULL")
+        
         value = (spotName, location)
         execute_DBOperation(create_spot, value)
         
