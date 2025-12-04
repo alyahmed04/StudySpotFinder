@@ -485,7 +485,10 @@ class test_SQL_commands(unittest.TestCase):
 
         cursor.close()
         db.close()
-    def test_invalid_cases(self):
+
+
+    #This method tests to ensure that invalid input for spot creation are handled properly and logically.     
+    def test_10_invalid_cases(self):
         print("9: Testing invalid inputs and cases")
         # Attempt to create a study spot with invalid name
         with self.assertRaises(Exception):
