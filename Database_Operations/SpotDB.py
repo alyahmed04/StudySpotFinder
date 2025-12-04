@@ -33,6 +33,8 @@ class SpotDB:
         execute_DBOperation(edit_spot_location, value)
 
     def delete_spot(spot: Spot):
-        value = (spot.spotID,)
+        #learned from:
+        #https://stackoverflow.com/questions/61831138/creating-python-tuple-with-one-int-item
+        value = tuple([spot.spotID,])
+        
         execute_DBOperation(delete_spot, value)
-
