@@ -422,7 +422,7 @@ class test_SQL_commands(unittest.TestCase):
         userRes = cursor.fetchone()
 
        
-        user = User(userID=userRes[0], username="testuser4",email="test6@vt.edu",password="testPassword",favoriteStudySpot=None,kudos=0) 
+        user = User(userID=userRes[0], username="testuser6",email="test6@vt.edu",password="testPassword",favoriteStudySpot=None,kudos=0) 
 
         cursor.close()
         db.close()
@@ -545,8 +545,8 @@ class test_SQL_commands(unittest.TestCase):
 
 
     #This method tests to ensure that invalid input for spot creation are handled properly and logically.     
-    def test_10_invalid_cases(self):
-        print("9: Testing invalid inputs and cases")
+    def test_11_invalid_spot_create_cases(self):
+        print("11: Testing invalid inputs and cases")
         # Attempt to create a study spot with invalid name
         with self.assertRaises(Exception):
             #attempt to create spot with empty name (not NULL empty string)
