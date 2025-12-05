@@ -398,11 +398,68 @@ class test_SQL_commands(unittest.TestCase):
         cursor.close()
         db.close()
     
+    def test_08_update_kudos(self):
+
+        print("8. Update user Kudos")
+        
+        #Create a new user
+        UserDB.create_user(
+            username="testuser6",
+            email="test6@vt.edu",
+            password="testPassword",
+            favoriteStudySpot=None,
+            kudos=0
+        )
+
+
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE username = 'testuser6'")
+        
+        #learned from:
+        #https://www.geeksforgeeks.org/dbms/querying-data-from-a-database-using-fetchone-and-fetchall/
+        userRes = cursor.fetchone()
+
+       
+        user = User(userID=userRes[0], username="testuser6",email="test6@vt.edu",password="testPassword",favoriteStudySpot=None,kudos=0) 
+
+        cursor.close()
+        db.close()
+
+        #Edit the users favorite study spot
+        UserDB.update_kudos(user, 20)
+
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        #learned from:
+        #https://stackoverflow.com/questions/61831138/creating-python-tuple-with-one-int-item
+        userId = tuple([userRes[0],])
+
+        cursor.execute("SELECT * FROM users WHERE userID = %s", userId)
+
+        result = cursor.fetchone()
+
+        #Expected tuple from query
+        expected = (userRes[0], "testuser6", "test6@vt.edu", "testPassword", None, 20)
+        
+        self.assertEqual(result, expected)
+        
+
+        #learned from:
+        #https://www.w3schools.com/python/python_mysql_delete.asp
+        cursor.execute("DELETE FROM users WHERE userID = %s", userId)
+
+        db.commit()
+
+        cursor.close()
+        db.close()
 
      #This method tests the removal of a user in the UserDB class
-    def test_08_remove_user(self):
+    def test_09_remove_user(self):
 
-        print("8. Remove User")
+        print("9. Remove User")
 
         #Create a new user
         UserDB.create_user(
@@ -444,9 +501,9 @@ class test_SQL_commands(unittest.TestCase):
     
 
     #This method tests the removal of a study spot in the SpotDB class
-    def test_09_remove_spot(self):
+    def test_10_remove_spot(self):
 
-        print("8. Remove Study Spot")
+        print("10. Remove Study Spot")
 
         #Create a new study spot
         SpotDB.create_spot("Newman Library", "560 Drillfield Dr, Blacksburg, VA")
@@ -488,8 +545,8 @@ class test_SQL_commands(unittest.TestCase):
 
 
     #This method tests to ensure that invalid input for spot creation are handled properly and logically.     
-    def test_10_invalid_cases(self):
-        print("9: Testing invalid inputs and cases")
+    def test_11_invalid_spot_create_cases(self):
+        print("11: Testing invalid inputs and cases")
         # Attempt to create a study spot with invalid name
         with self.assertRaises(Exception):
             #attempt to create spot with empty name (not NULL empty string)
