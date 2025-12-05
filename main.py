@@ -446,7 +446,7 @@ class test_SQL_commands(unittest.TestCase):
     #This method tests the removal of a study spot in the SpotDB class
     def test_09_remove_spot(self):
 
-        print("8. Remove Study Spot")
+        print("9. Remove Study Spot")
 
         #Create a new study spot
         SpotDB.create_spot("Newman Library", "560 Drillfield Dr, Blacksburg, VA")
@@ -487,9 +487,185 @@ class test_SQL_commands(unittest.TestCase):
         db.close()
 
 
+    #This method tests editing all editable fields of a review in the ReviewDB class
+    def test_10_edit_review_fields(self):
+
+        print("10. Editing all fields in a review")
+
+        #create a user to bind to a review
+        UserDB.create_user(
+            username="testuser2",
+            email="test2@vt.edu",
+            password="testPassword",
+            favoriteStudySpot=None, 
+            kudos=0
+        )
+
+        #create a study spot to bind to a review
+        SpotDB.create_spot("New", "580 Drillfield Dr, Blacksburg, VA")
+
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        cursor.execute("SELECT * FROM users WHERE username = 'testuser2'")
+
+        #learned from:
+        #https://www.geeksforgeeks.org/dbms/querying-data-from-a-database-using-fetchone-and-fetchall/
+        userRes = cursor.fetchone()
+        user = User(userID=userRes[0],username="testuser2",email="test2@vt.edu",password="testPassword",favoriteStudySpot=None,kudos=0)
+
+        cursor.execute("SELECT * FROM study_spots WHERE spotName = 'new'")
+
+        spotRes = cursor.fetchone()
+        spot = Spot(spotID=spotRes[0],spotName="New",location="580 Drillfield Dr, Blacksburg, VA")
+
+        cursor.close()
+        db.close()
+
+        ReviewDB.create_review(starRating = 4, noiseLevel = 7, content = "Test content", crowdedness = 7, user = user, spot = spot)
+
+        # Fetch the reviewID that was just inserted
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        cursor.execute(
+            "SELECT * FROM spot_reviews WHERE userID = %s AND spotID = %s ORDER BY reviewID DESC LIMIT 1",
+            (5, 7)
+        )
+
+        reviewRes = cursor.fetchone()
+
+        review = Review(
+            reviewID=reviewRes[0],
+            spotID=reviewRes[1],
+            userID=reviewRes[2],
+            noiseLevel=reviewRes[3],
+            crowdedness=reviewRes[4],
+            starRating=reviewRes[5],
+            reviewText=reviewRes[6]
+        )
+
+        cursor.close()
+        db.close()
+
+        # --------------------------------------------------------
+        # Perform edits on every field
+        # --------------------------------------------------------
+        ReviewDB.edit_review_rating(review, 4.5)
+        ReviewDB.edit_review_text(review, "Updated text")
+        ReviewDB.edit_review_noiseLevel(review, 4)
+        ReviewDB.edit_review_crowdedness(review, 3)
+
+        # --------------------------------------------------------
+        # Fetch updated review to validate changes
+        # --------------------------------------------------------
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        # Value needed for the SELECT statement
+        value = tuple([review.reviewID,])
+
+        cursor.execute("SELECT * FROM spot_reviews WHERE reviewID = %s", value)
+
+        updated = cursor.fetchone()
+
+        expected = (
+            review.reviewID,
+            7,   # spotID
+            5,   # userID
+            4,   # noiseLevel updated
+            3,   # crowdedness updated
+            4.5, # starRating updated
+            "Updated text"  # reviewText updated
+        )
+
+        self.assertEqual(updated, expected)
+
+        # --------------------------------------------------------
+        # Cleanup: Remove the review row
+        # --------------------------------------------------------
+        cursor.execute("DELETE FROM spot_reviews WHERE reviewID = %s", value)
+        db.commit()
+
+        cursor.close()
+        db.close()
+
+
+
+    #This method tests the removal of a review in the ReviewDB class
+    def test_11_delete_review(self):
+
+        print("11. Remove a review")
+
+        # --------------------------------------------------------
+        # Insert a review to delete
+        # --------------------------------------------------------
+        ReviewDB.create_review(
+            starRating=3,
+            noiseLevel=2,
+            content="Content to delete",
+            crowdedness=1,
+            user=User(userID=5, username="temp", email="t@t.com", hashedPassword="x", favoriteStudySpot=None, kudos=0),
+            spot=Spot(spotID=7, spotName="Test Spot", location="Location")
+        )
+
+        # --------------------------------------------------------
+        # Fetch the reviewID that was just inserted
+        # --------------------------------------------------------
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        # Syntax learned from:
+        # https://stackoverflow.com/questions/69960814/how-to-use-where-and-in-mysql-query-and-python
+        cursor.execute(
+            "SELECT * FROM spot_reviews WHERE userID = %s AND spotID = %s ORDER BY reviewID DESC LIMIT 1",
+            (5, 7)
+        )
+
+        reviewRes = cursor.fetchone()
+
+        review = Review(
+            reviewID=reviewRes[0],
+            spotID=reviewRes[1],
+            userID=reviewRes[2],
+            noiseLevel=reviewRes[3],
+            crowdedness=reviewRes[4],
+            starRating=reviewRes[5],
+            reviewText=reviewRes[6]
+        )
+
+        cursor.close()
+        db.close()
+
+        # --------------------------------------------------------
+        # Perform the deletion
+        # --------------------------------------------------------
+        ReviewDB.delete_review(review)
+
+        # --------------------------------------------------------
+        # Fetch from DB to ensure the review was removed
+        # --------------------------------------------------------
+        db = mysql.connector.connect(**config)
+        cursor = db.cursor()
+
+        # Learn how to create single-item tuples:
+        # https://stackoverflow.com/questions/61831138/creating-python-tuple-with-one-int-item
+        value = tuple([review.reviewID,])
+
+        cursor.execute("SELECT * FROM spot_reviews WHERE reviewID = %s", value)
+
+        removedReviewRes = cursor.fetchone()
+
+        # The review should no longer exist
+        self.assertIsNone(removedReviewRes)
+
+        cursor.close()
+        db.close()
+
+
     #This method tests to ensure that invalid input for spot creation are handled properly and logically.     
-    def test_10_invalid_cases(self):
-        print("9: Testing invalid inputs and cases")
+    def test_12_invalid_cases(self):
+        print("11: Testing invalid inputs and cases")
         # Attempt to create a study spot with invalid name
         with self.assertRaises(Exception):
             #attempt to create spot with empty name (not NULL empty string)
