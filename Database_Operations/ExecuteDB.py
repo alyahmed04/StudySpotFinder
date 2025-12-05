@@ -1,4 +1,5 @@
 import mysql.connector
+from mysql.connector import pooling
 
 #Learned from the following sources about sql and mysqlconnector
 #https://dev.mysql.com/doc/connector-python/en/connector-python-example-cursor-transaction.html
@@ -13,11 +14,17 @@ config = {
   'raise_on_warnings': True
 }
 
+# Creates a connection pool, pool_size of 5 is more than sufficient for testing
+connection_pool = pooling.MySQLConnectionPool(
+    pool_name = "studyspot_pool",
+    pool_size = 5,
+    **config
+)
 
 def execute_DBOperation(command, value):
-        db = mysql.connector.connect(**config)
-        cursor = db.cursor()
+        conn = connection_pool.get_connection()
+        cursor = conn.cursor()
         cursor.execute(command, value)
-        db.commit()
+        conn.commit()
         cursor.close()
-        db.close()
+        conn.close()
