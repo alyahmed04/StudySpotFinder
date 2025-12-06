@@ -49,6 +49,6 @@ class ReviewDB:
 
 
     def delete_review(review: Review):
-        value = (review.reviewID)
+        value = (review.reviewID,)
         execute_DBOperation(delete_review, value)
     
